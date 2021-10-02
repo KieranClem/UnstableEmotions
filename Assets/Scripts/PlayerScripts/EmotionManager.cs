@@ -49,19 +49,33 @@ public class EmotionManager : MonoBehaviour
         switch (other.tag)
         {
             case "HappyTrigger":
+                StopAllCoroutines();
                 SetHappy();
+                StartCoroutine(ResetToNormal(30));
                 break;
             case "SadTrigger":
+                StopAllCoroutines();
                 SetSad();
+                StartCoroutine(ResetToNormal(30));
                 break;
             case "AngryTrigger":
+                StopAllCoroutines();
                 SetAngry();
+                StartCoroutine(ResetToNormal(30));
                 break;
             case "ExcitedTrigger":
+                StopAllCoroutines();
                 SetExcited();
+                StartCoroutine(ResetToNormal(30));
                 break;
             case "BreakableObject":
                 if(playerEmotions == Emotions.ANGRY)
+                {
+                    DestroyGameObject(other.gameObject);
+                }
+                break;
+            case "Enemy":
+                if (playerEmotions == Emotions.ANGRY)
                 {
                     DestroyGameObject(other.gameObject);
                 }
@@ -94,6 +108,7 @@ public class EmotionManager : MonoBehaviour
 
     void SetSad()
     {
+        //SetNormal used to reset everything before changing to new emotion
         SetNormal();
         playerEmotions = Emotions.SAD;
         rend.material.SetColor("_Color", Blue);
@@ -102,6 +117,7 @@ public class EmotionManager : MonoBehaviour
 
     void SetAngry()
     {
+        //SetNormal used to reset everything before changing to new emotion
         SetNormal();
         playerEmotions = Emotions.ANGRY;
         rend.material.SetColor("_Color", Red);
@@ -109,10 +125,18 @@ public class EmotionManager : MonoBehaviour
 
     void SetExcited()
     {
+        //SetNormal used to reset everything before changing to new emotion
         SetNormal();
         playerEmotions = Emotions.EXCITED;
         rend.material.SetColor("_Color", Yellow);
         playerMov.playerSpeed *= 2;
+    }
+
+    IEnumerator ResetToNormal(int effectTime)
+    {
+        
+        yield return new WaitForSeconds(effectTime);
+        SetNormal();
     }
 
 }

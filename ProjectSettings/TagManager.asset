@@ -10,6 +10,7 @@ TagManager:
   - AngryTrigger
   - ExcitedTrigger
   - BreakableObject
+  - CryPoints
   layers:
   - Default
   - TransparentFX

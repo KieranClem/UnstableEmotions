@@ -16,10 +16,9 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public float normalPlayerDrag;
     [HideInInspector] public float normalPlayerSpeed;
 
-    float MaxJumpPostion;
-
+    //Tracks what state the player is in
     EmotionManager playerEmotions;
-
+    //stores if the player is floating or not
     [HideInInspector] public bool SlowFalling = false;
 
     
@@ -41,11 +40,13 @@ public class PlayerMovement : MonoBehaviour
         if(Mathf.Abs(Movement.y) > 0.5f)
         {
             transform.position += Movement.y * Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up).normalized * playerSpeed * Time.deltaTime;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Movement.y * Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up).normalized), 0.15f);
         }
 
         if(Mathf.Abs(Movement.x) > 0.5f)
         {
             transform.position += Movement.x * Vector3.ProjectOnPlane(Camera.main.transform.right, Vector3.up).normalized * playerSpeed * Time.deltaTime;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Movement.x * Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up).normalized), 0.15f);
         }
 
         if (isGrounded)
@@ -55,11 +56,13 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
                 isGrounded = false;
             }
-        }    
+        }
     }
 
+    //check if the player is falling last
     private void LateUpdate()
     {
+        //Only activates if the player isn't grounded and is happy
         if (!isGrounded && (playerEmotions.playerEmotions == Emotions.HAPPY))
         {
             if (rb.velocity.y < 0)
@@ -84,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ActivateSlowFall(bool AlreadyActive)
     {
+        //Increases drag to give the effect of floating
         if(!AlreadyActive)
         {
             rb.drag += 3;
