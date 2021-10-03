@@ -12,6 +12,9 @@ TagManager:
   - BreakableObject
   - CryPoints
   - MessageBox
+  - RespawnPoint
+  - BottomlessPit
+  - LevelTracker
   layers:
   - Default
   - TransparentFX

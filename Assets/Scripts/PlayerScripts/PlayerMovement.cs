@@ -19,7 +19,9 @@ public class PlayerMovement : MonoBehaviour
     //Tracks what state the player is in
     EmotionManager playerEmotions;
     //stores if the player is floating or not
-    [HideInInspector] public bool SlowFalling = false;
+    [HideInInspector] public bool slowFalling = false;
+
+    [HideInInspector] public Transform respawnPoint;
 
     
     // Start is called before the first frame update
@@ -65,11 +67,11 @@ public class PlayerMovement : MonoBehaviour
         //Only activates if the player isn't grounded and is happy
         if (!isGrounded && (playerEmotions.playerEmotions == Emotions.HAPPY))
         {
-            if (rb.velocity.y < 0)
+            if (rb.velocity.y < -0.5)
             {
-                if(Input.GetKeyDown(KeyCode.V))
+                if(Input.GetKeyDown(KeyCode.Space))
                 {
-                    ActivateSlowFall(SlowFalling);
+                    ActivateSlowFall(slowFalling);
                 }
             }
         }
@@ -81,7 +83,17 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = true;
             rb.drag = normalPlayerDrag;
-            SlowFalling = false;
+            slowFalling = false;
+        }
+
+        if(other.tag == "RespawnPoint")
+        {
+            respawnPoint = other.transform;
+        }
+
+        if(other.tag == "BottomlessPit")
+        {
+            ResetPosition();
         }
     }
 
@@ -91,12 +103,18 @@ public class PlayerMovement : MonoBehaviour
         if(!AlreadyActive)
         {
             rb.drag += 3;
-            SlowFalling = true;
+            slowFalling = true;
         }
         else
         {
             rb.drag = normalPlayerDrag;
-            SlowFalling = false;
+            slowFalling = false;
         }
+    }
+
+    public void ResetPosition()
+    {
+        this.transform.position = respawnPoint.position;
+        playerEmotions.SetNormal();
     }
 }

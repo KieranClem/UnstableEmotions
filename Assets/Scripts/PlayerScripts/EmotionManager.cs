@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Different emotions the player character can be under
 public enum Emotions
 {
     NORMAL,
@@ -11,7 +12,6 @@ public enum Emotions
     EXCITED
 }
 
-
 public class EmotionManager : MonoBehaviour
 {
     //Managing emotional state character is in
@@ -19,6 +19,8 @@ public class EmotionManager : MonoBehaviour
 
     //Stores playerMovement to adjust information as the character enters different emotional states
     private PlayerMovement playerMov;
+
+    public int effectTimer = 15;
 
     //Colours which represent the emotions
     private Color Gray = Color.gray;
@@ -51,22 +53,22 @@ public class EmotionManager : MonoBehaviour
             case "HappyTrigger":
                 StopAllCoroutines();
                 SetHappy();
-                StartCoroutine(ResetToNormal(30));
+                StartCoroutine(ResetToNormal(effectTimer));
                 break;
             case "SadTrigger":
                 StopAllCoroutines();
                 SetSad();
-                StartCoroutine(ResetToNormal(30));
+                StartCoroutine(ResetToNormal(effectTimer));
                 break;
             case "AngryTrigger":
                 StopAllCoroutines();
                 SetAngry();
-                StartCoroutine(ResetToNormal(30));
+                StartCoroutine(ResetToNormal(effectTimer));
                 break;
             case "ExcitedTrigger":
                 StopAllCoroutines();
                 SetExcited();
-                StartCoroutine(ResetToNormal(30));
+                StartCoroutine(ResetToNormal(effectTimer));
                 break;
             case "BreakableObject":
                 if(playerEmotions == Emotions.ANGRY)
@@ -79,6 +81,11 @@ public class EmotionManager : MonoBehaviour
                 {
                     DestroyGameObject(other.gameObject);
                 }
+                else
+                {
+                    StopAllCoroutines();
+                    playerMov.ResetPosition();
+                }
                 break;
         }
     }
@@ -89,12 +96,12 @@ public class EmotionManager : MonoBehaviour
     }
 
     //Set different emotional states
-    void SetNormal()
+    public void SetNormal()
     {
         playerEmotions = Emotions.NORMAL;
         rend.material.SetColor("_Color", Gray);
         playerMov.rb.drag = playerMov.normalPlayerDrag;
-        playerMov.SlowFalling = false;
+        playerMov.slowFalling = false;
         playerMov.playerSpeed = playerMov.normalPlayerSpeed;
     }
 
@@ -134,7 +141,6 @@ public class EmotionManager : MonoBehaviour
 
     IEnumerator ResetToNormal(int effectTime)
     {
-        
         yield return new WaitForSeconds(effectTime);
         SetNormal();
     }
