@@ -36,6 +36,7 @@ public class PressurePlate : MonoBehaviour
         {
             if (!Solved)
             {
+                StopAllCoroutines();
                 StartCoroutine(CheckIfPlayerPassed());
             }
         }

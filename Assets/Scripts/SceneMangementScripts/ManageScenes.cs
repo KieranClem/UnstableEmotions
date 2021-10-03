@@ -19,4 +19,19 @@ public class ManageScenes : MonoBehaviour
     {
         SceneManager.LoadScene("Level2");
     }
+
+    public void LoadLevelThree()
+    {
+        SceneManager.LoadScene("Level3");
+    }
+
+    public void LoadLevelFour()
+    {
+        SceneManager.LoadScene("Level4");
+    }
+
+    public void LoadLevelFive()
+    {
+        SceneManager.LoadScene("Level5");
+    }
 }

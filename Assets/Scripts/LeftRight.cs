@@ -12,6 +12,7 @@ public class LeftRight : MonoBehaviour
     public float speed;
     bool movLeftRight;
     
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +26,7 @@ public class LeftRight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Movement.position.z == targetPosition.z)
+        if(Mathf.Round(Movement.position.z) == Mathf.Round(targetPosition.z))
         {
             if(movLeftRight)
             {
