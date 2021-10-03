@@ -11,6 +11,7 @@ TagManager:
   - ExcitedTrigger
   - BreakableObject
   - CryPoints
+  - MessageBox
   layers:
   - Default
   - TransparentFX

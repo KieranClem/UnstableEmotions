@@ -21,7 +21,7 @@ public class EmotionManager : MonoBehaviour
     private PlayerMovement playerMov;
 
     //Colours which represent the emotions
-    private Color White = Color.white;
+    private Color Gray = Color.gray;
     private Color Green = Color.green;
     private Color Blue = Color.blue;
     private Color Red = Color.red;
@@ -92,7 +92,7 @@ public class EmotionManager : MonoBehaviour
     void SetNormal()
     {
         playerEmotions = Emotions.NORMAL;
-        rend.material.SetColor("_Color", White);
+        rend.material.SetColor("_Color", Gray);
         playerMov.rb.drag = playerMov.normalPlayerDrag;
         playerMov.SlowFalling = false;
         playerMov.playerSpeed = playerMov.normalPlayerSpeed;
