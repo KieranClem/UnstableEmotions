@@ -9,4 +9,14 @@ public class ManageScenes : MonoBehaviour
     {
         SceneManager.LoadScene("TutorialLevel");
     }
+
+    public void LoadLevelOne()
+    {
+        SceneManager.LoadScene("Level1");
+    }
+
+    public void LoadLevelTwo()
+    {
+        SceneManager.LoadScene("Level2");
+    }
 }

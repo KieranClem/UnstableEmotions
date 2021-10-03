@@ -16,7 +16,10 @@ public class LoadLevelSelect : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            unlockedLevels.FinishedLevels.Add(SceneManager.GetActiveScene().name);
+            if (!unlockedLevels.FinishedLevels.Contains(SceneManager.GetActiveScene().name))
+            {
+                unlockedLevels.FinishedLevels.Add(SceneManager.GetActiveScene().name);
+            }
             SceneManager.LoadScene("LevelSelect");
         }
     }

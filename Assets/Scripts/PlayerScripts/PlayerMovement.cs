@@ -96,8 +96,15 @@ public class PlayerMovement : MonoBehaviour
         if(other.tag == "BottomlessPit")
         {
             ResetPosition();
-            playerEmotions.ResetBrokenObjects();
-            playerEmotions.ResetDefeatedEnemies();
+            
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Floor")
+        {
+            isGrounded = false;
         }
     }
 
@@ -118,6 +125,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void ResetPosition()
     {
+        playerEmotions.ResetBrokenObjects();
+        playerEmotions.ResetDefeatedEnemies();
         this.transform.position = respawnPoint.position;
         playerEmotions.SetNormal();
     }

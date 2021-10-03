@@ -111,12 +111,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea7f3717a378a44ab5a3a0918d3e45a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 5
+  playerSpeed: 7
   jumpHeight: 10
   rb: {fileID: 0}
   normalPlayerDrag: 0
   normalPlayerSpeed: 0
-  SlowFalling: 0
+  slowFalling: 0
+  respawnPoint: {fileID: 0}
 --- !u!54 &1163291642495101931
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -159,3 +160,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEmotions: 0
+  effectTimer: 15

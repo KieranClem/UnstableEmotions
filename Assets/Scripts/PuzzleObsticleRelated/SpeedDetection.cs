@@ -10,6 +10,7 @@ public class SpeedDetection : MonoBehaviour
         if(other.GetComponent<EmotionManager>().playerEmotions != Emotions.SAD)
         {
             //Reset player to start of section
+            other.GetComponent<PlayerMovement>().ResetPosition();
         }
     }
 }
