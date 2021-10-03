@@ -30,6 +30,8 @@ public class EmotionManager : MonoBehaviour
     private Color Yellow = Color.yellow;
     private Renderer rend;
 
+    List<MeshRenderer> BrokenObjects = new List<MeshRenderer>();
+    List<EnemyAI> defeatedEnemies = new List<EnemyAI>();
 
     // Start is called before the first frame update
     void Start()
@@ -73,13 +75,18 @@ public class EmotionManager : MonoBehaviour
             case "BreakableObject":
                 if(playerEmotions == Emotions.ANGRY)
                 {
-                    DestroyGameObject(other.gameObject);
+                    BrokenObjects.Add(other.GetComponent<MeshRenderer>());
+                    other.GetComponent<MeshRenderer>().enabled = false;
+                    other.GetComponent<BoxCollider>().enabled = false;
                 }
                 break;
             case "Enemy":
                 if (playerEmotions == Emotions.ANGRY)
                 {
-                    DestroyGameObject(other.gameObject);
+                    defeatedEnemies.Add(other.GetComponent<EnemyAI>());
+                    other.GetComponent<MeshRenderer>().enabled = false;
+                    other.GetComponent<BoxCollider>().enabled = false;
+                    other.GetComponent<EnemyAI>().StopEnemy();
                 }
                 else
                 {
@@ -87,6 +94,59 @@ public class EmotionManager : MonoBehaviour
                     playerMov.ResetPosition();
                 }
                 break;
+        }
+    }
+
+    public void ResetBrokenObjects()
+    {
+        if (BrokenObjects.Count != 0)
+        {
+            foreach (MeshRenderer renderer in BrokenObjects)
+            {
+                renderer.enabled = true;
+                renderer.GetComponent<BoxCollider>().enabled = true;
+                BrokenObjects.Remove(renderer);
+            }
+            BrokenObjects = new List<MeshRenderer>();
+        }
+    }
+
+    public void DestoryPassedBrokenObjects()
+    {
+        if (BrokenObjects.Count != 0)
+        {
+            foreach (MeshRenderer renderer in BrokenObjects)
+            {
+                Destroy(renderer.gameObject);
+            }
+            BrokenObjects = new List<MeshRenderer>();
+        }
+    }
+
+    public void ResetDefeatedEnemies()
+    {
+        if(defeatedEnemies.Count != 0)
+        {
+            foreach(EnemyAI enemy in defeatedEnemies)
+            {
+                enemy.StartMoving();
+                enemy.GetComponent<MeshRenderer>().enabled = true;
+                enemy.GetComponent<BoxCollider>().enabled = true;
+                defeatedEnemies.Remove(enemy);
+            }
+            defeatedEnemies = new List<EnemyAI>();
+        }
+    }
+
+    public void DestroyPassedEnemies()
+    {
+        if(defeatedEnemies.Count != 0)
+        {
+            foreach(EnemyAI enemy in defeatedEnemies)
+            {
+                Destroy(enemy.gameObject);
+            }
+            defeatedEnemies = new List<EnemyAI>();
         }
     }
 

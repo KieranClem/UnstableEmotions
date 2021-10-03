@@ -89,11 +89,15 @@ public class PlayerMovement : MonoBehaviour
         if(other.tag == "RespawnPoint")
         {
             respawnPoint = other.transform;
+            playerEmotions.DestoryPassedBrokenObjects();
+            playerEmotions.DestroyPassedEnemies();
         }
 
         if(other.tag == "BottomlessPit")
         {
             ResetPosition();
+            playerEmotions.ResetBrokenObjects();
+            playerEmotions.ResetDefeatedEnemies();
         }
     }
 

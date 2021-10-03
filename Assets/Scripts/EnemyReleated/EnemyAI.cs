@@ -71,4 +71,14 @@ public class EnemyAI : MonoBehaviour
         travelPointer = 0;
         SetNextDestination();
     }
+
+    public void StopEnemy()
+    {
+        nav.isStopped = true;
+    }
+
+    public void StartMoving()
+    {
+        nav.isStopped = false;
+    }
 }

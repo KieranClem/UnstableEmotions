@@ -15,6 +15,7 @@ TagManager:
   - RespawnPoint
   - BottomlessPit
   - LevelTracker
+  - Enemy
   layers:
   - Default
   - TransparentFX
