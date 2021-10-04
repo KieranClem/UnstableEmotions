@@ -80,7 +80,11 @@ public class EmotionManager : MonoBehaviour
                     defeatedEnemies.Add(other.GetComponent<EnemyAI>());
                     other.GetComponent<MeshRenderer>().enabled = false;
                     other.GetComponent<BoxCollider>().enabled = false;
-                    other.GetComponent<EnemyAI>().StopEnemy();
+                    if(other.GetComponent<EnemyAI>())
+                    {
+                        other.GetComponent<EnemyAI>().StopEnemy();
+                    }
+                    
                 }
                 else
                 {
@@ -112,8 +116,8 @@ public class EmotionManager : MonoBehaviour
             {
                 renderer.enabled = true;
                 renderer.GetComponent<BoxCollider>().enabled = true;
-                BrokenObjects.Remove(renderer);
             }
+            BrokenObjects.Clear();
             BrokenObjects = new List<MeshRenderer>();
         }
     }
@@ -136,11 +140,14 @@ public class EmotionManager : MonoBehaviour
         {
             foreach(EnemyAI enemy in defeatedEnemies)
             {
-                enemy.StartMoving();
+                if (enemy.GetComponent<EnemyAI>())
+                {
+                    enemy.StartMoving();
+                }
                 enemy.GetComponent<MeshRenderer>().enabled = true;
                 enemy.GetComponent<BoxCollider>().enabled = true;
-                defeatedEnemies.Remove(enemy);
             }
+            defeatedEnemies.Clear();
             defeatedEnemies = new List<EnemyAI>();
         }
     }

@@ -117,6 +117,11 @@ public class PlayerMovement : MonoBehaviour
                 isGrounded = true;
             }
         }
+
+        if (other.tag == "Floor")
+        {
+            isGrounded = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
