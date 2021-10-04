@@ -15,19 +15,13 @@ public class PressurePlate : MonoBehaviour
         Solved = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator CheckIfPlayerPassed()
     {
-        Solved = ObjectToChange.SetIntangibility();
+        Solved = ObjectToChange.SetIntangibility(true);
 
         yield return new WaitForSeconds(TimeLimit);
 
-        Solved = ObjectToChange.SetIntangibility();
+        Solved = ObjectToChange.SetIntangibility(false);
     }
 
     private void OnTriggerEnter(Collider other)

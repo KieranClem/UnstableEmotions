@@ -17,12 +17,6 @@ public class IntangibleObject : MonoBehaviour
         objectMaterial = this.GetComponent<MeshRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
@@ -34,9 +28,9 @@ public class IntangibleObject : MonoBehaviour
         }    
     }
 
-    public bool SetIntangibility()
+    public bool SetIntangibility(bool isPressed)
     {
-        if(isSolid.isTrigger == false)
+        if(isPressed)
         {
             isSolid.isTrigger = true;
             objectMaterial.material = intangibleMaterial;

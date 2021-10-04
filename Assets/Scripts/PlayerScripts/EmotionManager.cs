@@ -41,12 +41,6 @@ public class EmotionManager : MonoBehaviour
         rend = this.GetComponent<Renderer>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         //Manages collision, be it things that change emotional state or other interactable objects reliant on emotional state
@@ -94,6 +88,19 @@ public class EmotionManager : MonoBehaviour
                     playerMov.ResetPosition();
                 }
                 break;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.tag == "BreakableObject")
+        {
+            if (playerEmotions == Emotions.ANGRY)
+            {
+                BrokenObjects.Add(other.GetComponent<MeshRenderer>());
+                other.GetComponent<MeshRenderer>().enabled = false;
+                other.GetComponent<BoxCollider>().enabled = false;
+            }
         }
     }
 

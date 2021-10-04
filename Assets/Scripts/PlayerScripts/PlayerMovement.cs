@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
     [HideInInspector] public Transform respawnPoint;
 
+    public Animator playerAnimation;
+
     
     // Start is called before the first frame update
     void Start()
@@ -39,16 +41,20 @@ public class PlayerMovement : MonoBehaviour
         Movement.x = Input.GetAxisRaw("Horizontal");
         Movement.y = Input.GetAxisRaw("Vertical");
 
-        if(Mathf.Abs(Movement.y) > 0.5f)
+        playerAnimation.SetFloat("Speed", Mathf.Abs(Movement.y));
+
+        if (Mathf.Abs(Movement.y) > 0.5f)
         {
             transform.position += Movement.y * Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up).normalized * playerSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Movement.y * Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up).normalized), 0.15f);
+            playerAnimation.SetFloat("Speed",Mathf.Abs(Movement.y));
         }
 
         if(Mathf.Abs(Movement.x) > 0.5f)
         {
             transform.position += Movement.x * Vector3.ProjectOnPlane(Camera.main.transform.right, Vector3.up).normalized * playerSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Movement.x * Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up).normalized), 0.15f);
+            playerAnimation.SetFloat("Speed", Mathf.Abs(Movement.x));
         }
 
         if (isGrounded)
@@ -81,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(other.tag == "Floor")
         {
+            CancelInvoke("OffFloor");
             isGrounded = true;
             rb.drag = normalPlayerDrag;
             slowFalling = false;
@@ -101,12 +108,28 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "BreakableObject")
+        {
+            if (playerEmotions.playerEmotions != Emotions.ANGRY)
+            {
+                isGrounded = true;
+            }
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Floor")
         {
-            isGrounded = false;
+            Invoke("OffFloor", 0.5f);
         }
+    }
+
+    void OffFloor()
+    {
+        isGrounded = false;
     }
 
     void ActivateSlowFall(bool AlreadyActive)
