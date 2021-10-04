@@ -89,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
         if(other.tag == "RespawnPoint")
         {
             respawnPoint = other.transform;
+            other.enabled = false;
             playerEmotions.DestoryPassedBrokenObjects();
             playerEmotions.DestroyPassedEnemies();
         }
